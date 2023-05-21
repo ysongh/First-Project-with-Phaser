@@ -1,9 +1,9 @@
+import PhaserGame from './pages/Game';
 
 function App() {
-
   return (
     <>
-      <h1>Game</h1>
+      <PhaserGame />
     </>
   )
 }
