@@ -1,5 +1,35 @@
 import Phaser from 'phaser';
 
+class Player extends Phaser.GameObjects.Rectangle {
+  constructor(scene, x, y) {
+    super(scene, x, y, 32, 32, 0xFFFF00);
+
+    scene.add.existing(this);
+    scene.physics.world.enable(this);
+
+    this.body.setCollideWorldBounds(true);
+    this.body.setDrag(500);
+    this.body.setSize(32, 48);
+  }
+
+  update(cursors) {
+    const speed = 200;
+    this.body.setVelocity(0);
+
+    if (cursors.left.isDown) {
+      this.body.setVelocityX(-speed); // Move left
+    } else if (cursors.right.isDown) {
+      this.body.setVelocityX(speed); // Move right
+    }
+
+    if (cursors.up.isDown) {
+      this.body.setVelocityY(-speed); // Move up
+    } else if (cursors.down.isDown) {
+      this.body.setVelocityY(speed); // Move down
+    }
+  }
+}
+
 class Game extends Phaser.Scene {
   preload() {
     this.load.image('book', 'src/assets/book.png');
@@ -10,34 +40,13 @@ class Game extends Phaser.Scene {
 
     this.add.image(400, 200, 'book');
 
-    this.player = this.add.rectangle(400, 300, 32, 32, 0xFFFF00);
-
-    this.physics.world.enable(this.player);
-    this.player.body.setCollideWorldBounds(true);
-    this.player.body.setDrag(500);
-    this.player.body.setSize(32, 48);
+    this.player = new Player(this, 400, 300);
 
     this.cursors = this.input.keyboard.createCursorKeys();
   }
 
   update() {
-    const speed = 200;
-
-    this.player.body.setVelocity(0);
-
-    if (this.cursors.left.isDown) {
-      this.player.body.setVelocityX(-speed); // Move left
-    }
-    else if (this.cursors.right.isDown) {
-      this.player.body.setVelocityX(speed); // Move right
-    }
-
-    if (this.cursors.up.isDown) {
-      this.player.body.setVelocityY(-speed); // Move up
-    }
-    else if (this.cursors.down.isDown) {
-      this.player.body.setVelocityY(speed); // Move down
-    }
+    this.player.update(this.cursors);
   }
 }
 
