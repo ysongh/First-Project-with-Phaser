@@ -38,9 +38,12 @@ class Game extends Phaser.Scene {
   create() {
     this.cameras.main.setBounds(0, 0, 800, 600);
 
-    this.add.image(400, 200, 'book');
-
     this.player = new Player(this, 400, 300);
+
+    this.book = this.physics.add.sprite(400, 100, 'book');
+    this.book.setCollideWorldBounds(true);
+    this.book.setImmovable(true);
+    this.physics.add.collider(this.player, this.book);
 
     this.cursors = this.input.keyboard.createCursorKeys();
   }
