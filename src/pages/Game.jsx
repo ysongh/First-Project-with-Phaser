@@ -33,6 +33,7 @@ class Player extends Phaser.GameObjects.Rectangle {
 class Game extends Phaser.Scene {
   preload() {
     this.load.image('book', 'src/assets/book.png');
+    this.load.image('rock', 'src/assets/rock.png');
   }
 
   create() {
@@ -40,12 +41,23 @@ class Game extends Phaser.Scene {
 
     this.player = new Player(this, 400, 300);
 
-    this.book = this.physics.add.sprite(400, 100, 'book');
-    this.book.setCollideWorldBounds(true);
-    this.book.setImmovable(true);
-    this.physics.add.collider(this.player, this.book);
+    this.rock = this.physics.add.sprite(400, 100, 'rock');
+    this.rock.setCollideWorldBounds(true);
+    this.rock.setImmovable(true);
+    this.physics.add.collider(this.player, this.rock);
+
+    this.object1 = this.physics.add.sprite(300, 300, 'book');
+    this.object2 = this.physics.add.sprite(500, 300, 'book');
+    this.object3 = this.physics.add.sprite(400, 500, 'book');
+    this.physics.add.collider(this.player, this.object1, this.handleCollision, null, this);
+    this.physics.add.collider(this.player, this.object2, this.handleCollision, null, this);
+    this.physics.add.collider(this.player, this.object3, this.handleCollision, null, this);
 
     this.cursors = this.input.keyboard.createCursorKeys();
+  }
+
+  handleCollision(player, object) {
+    object.destroy();
   }
 
   update() {
