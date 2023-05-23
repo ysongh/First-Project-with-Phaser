@@ -47,7 +47,7 @@ class Game extends Phaser.Scene {
 
     this.player = new Player(this, 400, 600, 'player');
 
-    this.rock = this.physics.add.sprite(400, 120, 'rock');
+    this.rock = this.physics.add.sprite(670, 295, 'rock');
     this.rock.setCollideWorldBounds(true);
     this.rock.setImmovable(true);
     this.physics.add.collider(this.player, this.rock);
