@@ -41,19 +41,28 @@ class Game extends Phaser.Scene {
   create() {
     this.cameras.main.setBounds(0, 0, 800, 600);
 
-    this.player = new Player(this, 400, 300);
+    this.player = new Player(this, 400, 600);
 
     this.rock = this.physics.add.sprite(400, 100, 'rock');
     this.rock.setCollideWorldBounds(true);
     this.rock.setImmovable(true);
     this.physics.add.collider(this.player, this.rock);
 
-    this.object1 = this.physics.add.sprite(300, 300, 'coin');
-    this.object2 = this.physics.add.sprite(500, 300, 'coin');
-    this.object3 = this.physics.add.sprite(400, 500, 'coin');
-    this.physics.add.collider(this.player, this.object1, this.earnCoin, null, this);
-    this.physics.add.collider(this.player, this.object2, this.earnCoin, null, this);
-    this.physics.add.collider(this.player, this.object3, this.earnCoin, null, this);
+    const coinsPerRow = 5;
+    const coinSpacing = 100;
+    const startX = 200;
+    const startY = 200;
+
+    this.coins = this.physics.add.group();
+
+    for (let row = 0; row < 3; row++) {
+      for (let col = 0; col < coinsPerRow; col++) {
+        const x = startX + col * coinSpacing;
+        const y = startY + row * coinSpacing;
+        const coin = this.coins.create(x, y, 'coin');
+        this.physics.add.collider(this.player, coin, this.earnCoin, null, this);
+      }
+    }
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
