@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
 
-class Player extends Phaser.GameObjects.Rectangle {
-  constructor(scene, x, y) {
-    super(scene, x, y, 32, 32, 0xFFFF00);
+class Player extends Phaser.GameObjects.Sprite {
+  constructor(scene, x, y, texture) {
+    super(scene, x, y, texture);
 
     scene.add.existing(this);
     scene.physics.world.enable(this);
@@ -32,7 +32,7 @@ class Player extends Phaser.GameObjects.Rectangle {
 
 class Game extends Phaser.Scene {
   preload() {
-    this.load.image('book', 'src/assets/book.png');
+    this.load.image('player', 'src/assets/player.png');
     this.load.image('coin', 'src/assets/coin.png');
     this.load.image('rock', 'src/assets/rock.png');
     this.load.audio('coinsound', 'src/assets/coin.mp3');
@@ -41,7 +41,7 @@ class Game extends Phaser.Scene {
   create() {
     this.cameras.main.setBounds(0, 0, 800, 600);
 
-    this.player = new Player(this, 400, 600);
+    this.player = new Player(this, 400, 600, 'player');
 
     this.rock = this.physics.add.sprite(400, 100, 'rock');
     this.rock.setCollideWorldBounds(true);
