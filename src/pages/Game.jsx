@@ -35,6 +35,7 @@ class Game extends Phaser.Scene {
     this.load.image('book', 'src/assets/book.png');
     this.load.image('coin', 'src/assets/coin.png');
     this.load.image('rock', 'src/assets/rock.png');
+    this.load.audio('coinsound', 'src/assets/coin.mp3');
   }
 
   create() {
@@ -50,14 +51,17 @@ class Game extends Phaser.Scene {
     this.object1 = this.physics.add.sprite(300, 300, 'coin');
     this.object2 = this.physics.add.sprite(500, 300, 'coin');
     this.object3 = this.physics.add.sprite(400, 500, 'coin');
-    this.physics.add.collider(this.player, this.object1, this.handleCollision, null, this);
-    this.physics.add.collider(this.player, this.object2, this.handleCollision, null, this);
-    this.physics.add.collider(this.player, this.object3, this.handleCollision, null, this);
+    this.physics.add.collider(this.player, this.object1, this.earnCoin, null, this);
+    this.physics.add.collider(this.player, this.object2, this.earnCoin, null, this);
+    this.physics.add.collider(this.player, this.object3, this.earnCoin, null, this);
 
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    this.sound.add('coinsound');
   }
 
-  handleCollision(player, object) {
+  earnCoin(player, object) {
+    this.sound.play('coinsound');
     object.destroy();
   }
 
