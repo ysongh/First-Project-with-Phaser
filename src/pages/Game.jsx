@@ -33,6 +33,7 @@ class Player extends Phaser.GameObjects.Rectangle {
 class Game extends Phaser.Scene {
   preload() {
     this.load.image('book', 'src/assets/book.png');
+    this.load.image('coin', 'src/assets/coin.png');
     this.load.image('rock', 'src/assets/rock.png');
   }
 
@@ -46,9 +47,9 @@ class Game extends Phaser.Scene {
     this.rock.setImmovable(true);
     this.physics.add.collider(this.player, this.rock);
 
-    this.object1 = this.physics.add.sprite(300, 300, 'book');
-    this.object2 = this.physics.add.sprite(500, 300, 'book');
-    this.object3 = this.physics.add.sprite(400, 500, 'book');
+    this.object1 = this.physics.add.sprite(300, 300, 'coin');
+    this.object2 = this.physics.add.sprite(500, 300, 'coin');
+    this.object3 = this.physics.add.sprite(400, 500, 'coin');
     this.physics.add.collider(this.player, this.object1, this.handleCollision, null, this);
     this.physics.add.collider(this.player, this.object2, this.handleCollision, null, this);
     this.physics.add.collider(this.player, this.object3, this.handleCollision, null, this);
