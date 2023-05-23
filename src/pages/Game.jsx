@@ -35,6 +35,10 @@ class Game extends Phaser.Scene {
     this.load.image('player', 'src/assets/player.png');
     this.load.image('coin', 'src/assets/coin.png');
     this.load.image('rock', 'src/assets/rock.png');
+    this.load.image('wall5x100', 'src/assets/wall5x100.png');
+    this.load.image('wall5x200', 'src/assets/wall5x200.png');
+    this.load.image('wall200x5', 'src/assets/wall200x5.png');
+    this.load.image('wall400x5', 'src/assets/wall400x5.png');
     this.load.audio('coinsound', 'src/assets/coin.mp3');
   }
 
@@ -43,10 +47,35 @@ class Game extends Phaser.Scene {
 
     this.player = new Player(this, 400, 600, 'player');
 
-    this.rock = this.physics.add.sprite(400, 100, 'rock');
+    this.rock = this.physics.add.sprite(400, 120, 'rock');
     this.rock.setCollideWorldBounds(true);
     this.rock.setImmovable(true);
     this.physics.add.collider(this.player, this.rock);
+
+    this.wall1 = this.physics.add.sprite(360, 240, 'wall5x200');
+    this.wall1.setCollideWorldBounds(true);
+    this.wall1.setImmovable(true);
+    this.physics.add.collider(this.player, this.wall1);
+
+    this.wall2 = this.physics.add.sprite(450, 445, 'wall200x5');
+    this.wall2.setCollideWorldBounds(true);
+    this.wall2.setImmovable(true);
+    this.physics.add.collider(this.player, this.wall2);
+
+    this.wall3 = this.physics.add.sprite(450, 240, 'wall400x5');
+    this.wall3.setCollideWorldBounds(true);
+    this.wall3.setImmovable(true);
+    this.physics.add.collider(this.player, this.wall3);
+
+    this.wall4 = this.physics.add.sprite(255, 340, 'wall5x200');
+    this.wall4.setCollideWorldBounds(true);
+    this.wall4.setImmovable(true);
+    this.physics.add.collider(this.player, this.wall4);
+
+    this.wall5 = this.physics.add.sprite(550, 345, 'wall200x5');
+    this.wall5.setCollideWorldBounds(true);
+    this.wall5.setImmovable(true);
+    this.physics.add.collider(this.player, this.wall5);
 
     const coinsPerRow = 5;
     const coinSpacing = 100;
