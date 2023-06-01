@@ -38,6 +38,7 @@ function App() {
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
         <ConnectButton />
+        <p>Count: {count}</p>
         <Game2 count={count} setCount={setCount} />
       </RainbowKitProvider>
     </WagmiConfig>
