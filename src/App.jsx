@@ -1,4 +1,5 @@
 import '@rainbow-me/rainbowkit/styles.css';
+import React, { useState } from "react"
 import {
   getDefaultWallets,
   RainbowKitProvider,
@@ -8,7 +9,8 @@ import { polygonMumbai } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
-import PhaserGame from './pages/Game';
+// import PhaserGame from './pages/Game';
+import Game2 from './pages/Game2';
 
 const { chains, publicClient } = configureChains(
   [polygonMumbai],
@@ -30,11 +32,13 @@ const wagmiConfig = createConfig({
 })
 
 function App() {
+  const [count, setCount] = useState(0);
+
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
         <ConnectButton />
-        <PhaserGame />
+        <Game2 count={count} setCount={setCount} />
       </RainbowKitProvider>
     </WagmiConfig>
   )
