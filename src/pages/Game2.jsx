@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import React, { useEffect, useState } from "react";
-import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import { useContractRead, useContractWrite, usePrepareContractWrite } from 'wagmi';
 
 import { Player } from '../components/Player';
 import CONTRACT_ABI from "../artifacts/contracts/CoinCollecterGame.sol/CoinCollecterGame.json";
@@ -14,6 +14,13 @@ const  Game2 = ({ count, setCount }) => {
   const dataService = (changedState) => {
     console.log(changedState)
   }
+
+  const pointData = useContractRead({
+    address: CONTRACT_ADDRESS,
+    abi: CONTRACT_ABI.abi,
+    functionName: 'getPoint'
+  });
+  console.log(pointData);
 
   const { config } = usePrepareContractWrite({
     address: CONTRACT_ADDRESS,
