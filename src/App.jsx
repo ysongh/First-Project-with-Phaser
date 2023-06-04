@@ -5,7 +5,7 @@ import {
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { polygonMumbai } from 'wagmi/chains';
+import { polygonMumbai, hardhat } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
@@ -13,7 +13,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import Game2 from './pages/Game2';
 
 const { chains, publicClient } = configureChains(
-  [polygonMumbai],
+  [polygonMumbai, hardhat],
   [
     publicProvider()
   ]

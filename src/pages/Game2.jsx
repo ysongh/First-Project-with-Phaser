@@ -1,7 +1,11 @@
-import Phaser from "phaser"
-import React, { useEffect, useState } from "react"
+import Phaser from "phaser";
+import React, { useEffect, useState } from "react";
+import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
 
 import { Player } from '../components/Player';
+import CONTRACT_ABI from "../artifacts/contracts/CoinCollecterGame.sol/CoinCollecterGame.json";
+
+const CONTRACT_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
 const  Game2 = ({ count, setCount }) => {
   console.log(count)
@@ -11,6 +15,14 @@ const  Game2 = ({ count, setCount }) => {
     console.log(changedState)
   }
 
+  const { config } = usePrepareContractWrite({
+    address: CONTRACT_ADDRESS,
+    abi: CONTRACT_ABI.abi,
+    functionName: 'earnPoint'
+  })
+  const { data, isLoading, isSuccess, write } = useContractWrite(config);
+  console.log(data, isLoading, isSuccess, write);
+
   useEffect(() => {
     const config = {
       callbacks: {
@@ -19,6 +31,7 @@ const  Game2 = ({ count, setCount }) => {
           game.registry.events.on("changedata", (par, key, val, prevVal) => {
             setCount(count++)
             dataService({ [key]: val })
+            write()
           })
         },
       },
@@ -34,13 +47,15 @@ const  Game2 = ({ count, setCount }) => {
       },
       scene: [ExampleScene],
     }
-    let game = new Phaser.Game(config)
-    game.events.on("READY", setReady)
-    return () => {
-      setReady(false)
-      game.destroy(true)
+    if(write){
+      let game = new Phaser.Game(config)
+      game.events.on("READY", setReady)
+      return () => {
+        setReady(false)
+        game.destroy(true)
+      }
     }
-  }, [])
+  }, [write])
   return (
     isReady && <div id="phaser-example" />
   )
